@@ -48,8 +48,35 @@ public class StudentController {
 
     }
 
+    @PutMapping("/student/{stdid}")
+    public String updateById(@PathVariable int stdid, @RequestBody Students students){
+        Optional<Students> std =studentRepository.findById(stdid);
+           if(std.isPresent()){
+               Students exist= std.get();
+               exist.setName(students.getName());
+               exist.setAddress(students.getAddress());
+               exist.setAge(students.getAge());
+               studentRepository.save(exist);
+               return "Students Details against id" + std +"Updated";
+           }else {
+               return "Students Details doesn't exist  for id" + std ;
+           }
 
 
+    }
+
+
+    @DeleteMapping("/student/{stdid}")
+    public String deletebyId(@PathVariable int stdid){
+        studentRepository.deleteById(stdid);
+        return "Student Delete";
+    }
+
+    @DeleteMapping("/student")
+    public String deleteAllStudent(){
+        studentRepository.deleteAll();
+        return "Student details Delete";
+    }
 
 
 
