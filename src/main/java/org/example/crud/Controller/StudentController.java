@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 @RestController
 @RequestMapping("/api")
@@ -22,9 +22,9 @@ public class StudentController {
     StudentRepository studentRepository;
 
     @PostMapping("/student")
-    public String CreatedNewStudent(@RequestBody Students students){
+    public ResponseEntity<String> CreatedNewStudent(@RequestBody Students students){
         studentRepository.save(students);
-        return "Student date Created in database";
+        return  new ResponseEntity<>("Created Success in DB",HttpStatus.OK);
 
     }
 
@@ -49,7 +49,7 @@ public class StudentController {
     }
 
     @PutMapping("/student/{stdid}")
-    public String updateById(@PathVariable int stdid, @RequestBody Students students){
+    public ResponseEntity<String>updateById(@PathVariable int stdid, @RequestBody Students students){
         Optional<Students> std =studentRepository.findById(stdid);
            if(std.isPresent()){
                Students exist= std.get();
@@ -57,9 +57,11 @@ public class StudentController {
                exist.setAddress(students.getAddress());
                exist.setAge(students.getAge());
                studentRepository.save(exist);
-               return "Students Details against id" + std +"Updated";
+
+               return new ResponseEntity<>("Students Details against id" +std + "Update",HttpStatus.OK);
            }else {
-               return "Students Details doesn't exist  for id" + std ;
+
+               return new ResponseEntity<>("Students Details doesn't exist  for id" +std,HttpStatus.OK);
            }
 
 
@@ -67,23 +69,16 @@ public class StudentController {
 
 
     @DeleteMapping("/student/{stdid}")
-    public String deletebyId(@PathVariable int stdid){
+    public ResponseEntity<String> deletebyId(@PathVariable int stdid){
         studentRepository.deleteById(stdid);
-        return "Student Delete";
+        return new ResponseEntity<>("Student details delete by id" +stdid  ,HttpStatus.OK);
     }
 
     @DeleteMapping("/student")
-    public String deleteAllStudent(){
+    public ResponseEntity<String> deleteAllStudent(){
         studentRepository.deleteAll();
-        return "Student details Delete";
+        return new ResponseEntity<>("All Student Details Delete from Db",HttpStatus.OK);
     }
-
-
-
-
-
-
-
 
 
 
