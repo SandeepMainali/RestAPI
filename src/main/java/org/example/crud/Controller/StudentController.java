@@ -58,7 +58,7 @@ public class StudentController {
                exist.setAge(students.getAge());
                studentRepository.save(exist);
 
-               return new ResponseEntity<>("Students Details against id" +std + "Update",HttpStatus.OK);
+               return new ResponseEntity<>("Students Details against id" + std + "Update",HttpStatus.OK);
            }else {
 
                return new ResponseEntity<>("Students Details doesn't exist  for id" +std,HttpStatus.OK);
@@ -71,7 +71,7 @@ public class StudentController {
     @DeleteMapping("/student/{stdid}")
     public ResponseEntity<String> deletebyId(@PathVariable int stdid){
         studentRepository.deleteById(stdid);
-        return new ResponseEntity<>("Student details delete by id" +stdid  ,HttpStatus.OK);
+        return new ResponseEntity<>("Student details delete by id" + stdid  ,HttpStatus.OK);
     }
 
     @DeleteMapping("/student")
